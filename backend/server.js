@@ -1,10 +1,15 @@
 const express = require('express');
 const mysql = require('mysql');
 
+
 const app = express();
 
 app.get('/', (req, res)=>{
                 res.send('Respondiendo desde Express por metodo GET');
+                console.log("Respuesta por GET");
+              });
+ app.get('/gorila', (req, res)=>{
+                res.send('El gori te oye porque es buenardo');
                 console.log("Respuesta por GET");
               });
 
@@ -14,35 +19,36 @@ app.post('/', (req, res)=>{
               });
 
 app.get('/usuarios', (req, res)=>{  
-                        
-                        let conexion = mysql.createConnection(
-                                                                {
-                                                                    host: 'localhost',
-                                                                    user: 'root',
-                                                                    password: '',
-                                                                    database: "cookipad"
-                                                                }
-                                                              );
+    let resultado = ''                   
+    let conexion = mysql.createConnection(
+        {
+            host: 'localhost',
+            user: 'root' ,
+            password: '' ,
+            database: "monadb"
+        }
+        );
 
-                        conexion.connect( 
-                                            function(err){
-                                                
-                                                if ( err ) throw err;
+    conexion.connect( 
+        function(err){
+            
+            if ( err ) throw err;
 
-                                                console.log("Conectado con exito!");
-                                                
-                                                conexion.query("SELECT * FROM recetas", 
-                                                                    function(err, result, fields){
-                                                                        if ( err ) throw err;
+            console.log("Conectado con exito!");
+            
+            conexion.query("SELECT * FROM `user`" , 
+                function(err, result, fields){
+                    if ( err ) throw err;
+                    resultado = result
+                    console.log(resultado);
+                }
+            );
 
-                                                                        console.log(result);
-                                                                     }
-                                                );
-                                                
-                                            }  
-                                        );
-res.send("ok");
-                     })
+        }  
+    );
+    console.log(resultado);
+    res.json(resultado);
+})
 
 app.get('/proveedores', (req, res)=>{
                             res.send("Listado de proveedores");
