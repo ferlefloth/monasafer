@@ -1,85 +1,49 @@
-$(document).ready(function() {
-    $("#add_row").on("click", function() {
-        // Dynamic Rows Code
-        
-        // Get max row id and set new id
-        var newid = 0;
-        $.each($("#tab_logic tr"), function() {
-            if (parseInt($(this).data("id")) > newid) {
-                newid = parseInt($(this).data("id"));
-            }
-        });
-        newid++;
-        
-        var tr = $("<tr></tr>", {
-            id: "addr"+newid,
-            "data-id": newid
-        });
-        
-        // loop through each td and create new elements with name of newid
-        $.each($("#tab_logic tbody tr:nth(0) td"), function() {
-            var td;
-            var cur_td = $(this);
-            
-            var children = cur_td.children();
-            
-            // add new td and element if it has a nane
-            if ($(this).data("name") !== undefined) {
-                td = $("<td></td>", {
-                    "data-name": $(cur_td).data("name")
-                });
-                
-                var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
-                c.attr("name", $(cur_td).data("name") + newid);
-                c.appendTo($(td));
-                td.appendTo($(tr));
-            } else {
-                td = $("<td></td>", {
-                    'text': $('#tab_logic tr').length
-                }).appendTo($(tr));
-            }
-        });
-        
-        // add delete button and td
-        /*
-        $("<td></td>").append(
-            $("<button class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>")
-                .click(function() {
-                    $(this).closest("tr").remove();
-                })
-        ).appendTo($(tr));
-        */
-        
-        // add the new row
-        $(tr).appendTo($('#tab_logic'));
-        
-        $(tr).find("td button.row-remove").on("click", function() {
-             $(this).closest("tr").remove();
-        });
-});
+document.getElementById('btn-nuevo').addEventListener('click', mostrarModalNuevoGasto)
 
-
-
-
-    // Sortable Code
-    var fixHelperModified = function(e, tr) {
-        var $originals = tr.children();
-        var $helper = tr.clone();
+function mostrarModalNuevoGasto(){
+    alert('ee')
+    document.querySelector('#modal-nuevo .modal-title').innerHTML = "NuevO Gasto"
     
-        $helper.children().each(function(index) {
-            $(this).width($originals.eq(index).width())
-        });
+}
+function mostrarModalEditarGasto(){
+    alert("editar el gasto")
+}
+async function cargarGastos(){
+    url = "http://localhost:3000/expend";
+
+    fetch(url).then(
+
+        response => {
+           
+            return response.json();
+            
+        }
         
-        return $helper;
-    };
-  
-    $(".table-sortable tbody").sortable({
-        helper: fixHelperModified      
-    }).disableSelection();
+            
+        ).then(
+            expend =>{mostrarGastosEnTabla(expend)}
+        )
 
-    $(".table-sortable thead").disableSelection();
+}
 
+function mostrarGastosEnTabla(expend){
 
+    let listadoGastos =document.getElementById('listado-gastos')
+    for (oneExpend of expend){
+        listadoGastos.innerHTML += `	<tr>
+                                            <td>${oneExpend.expen_descr}</td>
+                                            <td>$${oneExpend.expen_value}</td>
+                                            <td>${oneExpend.expen_creation_date}</td>
+                                            <td>${oneExpend.expen_finish_date}</td> 
+                                            <td>
+                                                <button class="btn btn-danger">Borrar</button>
+                                                <button class="btn btn-success btn-editar" data-toggle="modal" data-target="#modal-nuevo">Editar</button>
+                                            </td>
+                                        </tr>`
+    }
 
-    $("#add_row").trigger("click");
-});
+    document.getElementsByClassName('.btn-editar').forEach(
+        (botonEditar)=> {botonEditar.addEventListener('click', mostrarModalEditarGasto())}
+    )
+}
+cargarGastos();
