@@ -1,13 +1,24 @@
 document.getElementById('btn-nuevo').addEventListener('click', mostrarModalNuevoGasto)
 
 function mostrarModalNuevoGasto(){
-    alert('ee')
-    document.querySelector('#modal-nuevo .modal-title').innerHTML = "NuevO Gasto"
-    
+    cambiarTituloModal('Nuevo Gasto')
+
+    let inputs = document.getElementsByTagName('input');
+
+    for (input of inputs){
+        input.value = '';
+    }
 }
 function mostrarModalEditarGasto(){
-    alert("editar el gasto")
+    cambiarTituloModal('Editar Gasto')
+    
 }
+
+function cambiarTituloModal(titulo){
+
+    document.querySelector('#modal-nuevo .modal-title').innerHTML = titulo;
+}
+
 async function cargarGastos(){
     url = "http://localhost:3000/expend";
 
@@ -42,8 +53,8 @@ function mostrarGastosEnTabla(expend){
                                         </tr>`
     }
 
-    document.getElementsByClassName('.btn-editar').forEach(
-        (botonEditar)=> {botonEditar.addEventListener('click', mostrarModalEditarGasto())}
+    document.querySelectorAll('.btn-editar').forEach(
+        (botonEditar)=> {botonEditar.addEventListener('click', mostrarModalEditarGasto)}
     )
 }
 cargarGastos();
