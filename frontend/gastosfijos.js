@@ -1,6 +1,36 @@
 document.getElementById('btn-nuevo').addEventListener('click', mostrarModalNuevoGasto)
 document.getElementById('btn-guardar').addEventListener('click', guardarGastoEditado)
 
+function login(){
+let url = "http://localhost:3000/auth"
+
+fetch(url, {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({user:'pablo', password:'123456'}),
+                headers:{
+                            "Content-type": "application/json"
+                }
+           }
+ ).then(response => response.text() )
+ .then( data =>{
+                    console.log(data)
+                } )
+}
+
+function logout(){
+    let url = "http://localhost:3000/auth"
+
+    fetch(url, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                }
+    ).then(response => response.text() )
+    .then( data =>{
+                        console.log(data)
+                    } )
+    
+}
 
 function mostrarModalNuevoGasto(){
     cambiarTituloModal('Nuevo Gasto')
@@ -37,7 +67,7 @@ function cambiarTituloModal(titulo){
      fetch(url, {
                  method: 'POST',
                  body: JSON.stringify(data),
-                 //credentials :"include", //CUANDO TENGAS EL LOGIN, ES PARA QUE VIAJEN LAS COOKIES
+                 credentials :"include", //CUANDO TENGAS EL LOGIN, ES PARA QUE VIAJEN LAS COOKIES
                  headers:{
                              "Content-Type": "application/json"
                          }
@@ -54,7 +84,10 @@ function cambiarTituloModal(titulo){
 async function cargarGastos(){
     url = "http://localhost:3000/expend";
 
-    fetch(url).then(
+    fetch(url, {
+                method: 'GET',
+                credentials: 'include'
+    }).then(
 
         response => {
            
