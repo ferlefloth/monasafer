@@ -1,4 +1,6 @@
 document.getElementById('btn-nuevo').addEventListener('click', mostrarModalNuevoGasto)
+document.getElementById('btn-guardar').addEventListener('click', guardarGastoEditado)
+
 
 function mostrarModalNuevoGasto(){
     cambiarTituloModal('Nuevo Gasto')
@@ -17,8 +19,38 @@ function mostrarModalEditarGasto(){
 function cambiarTituloModal(titulo){
 
     document.querySelector('#modal-nuevo .modal-title').innerHTML = titulo;
+
 }
 
+
+ function guardarGastoEditado(){
+
+    let url = 'http://localhost:3000/expend'
+
+    let data= {
+         descr : document.getElementById('descr').value,
+         value : document.getElementById('value').value,
+         creationdate : document.getElementById('creationdate').value,
+         finishdate: document.getElementById('finishdate').value
+         };
+    
+     fetch(url, {
+                 method: 'POST',
+                 body: JSON.stringify(data),
+                 //credentials :"include", //CUANDO TENGAS EL LOGIN, ES PARA QUE VIAJEN LAS COOKIES
+                 headers:{
+                             "Content-Type": "application/json"
+                         }
+                })
+             
+             
+            .then (res => res.json())
+              
+            
+            .then (data =>{alert(data.message)})
+             
+            .catch((err)=>{alert('Error al guardar receta')})
+        };
 async function cargarGastos(){
     url = "http://localhost:3000/expend";
 
