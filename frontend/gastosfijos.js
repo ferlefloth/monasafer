@@ -14,7 +14,7 @@ function mostrarModalNuevoGasto(){
 function mostrarModalEditarGasto(){
     cambiarTituloModal('Editar Gasto')
     
-}
+};
 
 function cambiarTituloModal(titulo){
 
