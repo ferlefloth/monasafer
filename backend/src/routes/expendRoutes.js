@@ -1,20 +1,39 @@
 const express = require('express');
 const conexion = require('../connection')
-
 const router = express.Router();
 
 router.get('/', (req, res)=>{                          //GASTOS 
 
+  
 conexion.query('SELECT * FROM expend', function(err,result,fields){
         if (err) throw err;
         
-        //console.log(result);
+        console.log(result);
         res.json(result);
 })       
-                                  
+                        
         //res.send('listado de gastos de monadb')
-}
-);
+});
+
+router.get('/:id', (req, res) => {
+    
+        conexion.query('SELECT * FROM expend WHERE expen_id=' + req.params.id,
+                        function (err, result, fields){
+                            if ( err ) throw err;
+    
+                            res.json(result[0]);
+                        }
+                    )
+    
+    } );
+
+
+
+
+
+
+
+
 
 router.post('/', (req, res)=>{
 console.log(req.body)
@@ -25,10 +44,10 @@ let sql = `INSERT INTO expend (expen_descr, expen_value, expen_user_id, expen_cr
 let params = [
         req.body.descr, 
         req.body.value, 
-        req.body.userid, 
+        req.body.userid = 1,  // TENGO QUE METER ESTA OPCION METER ESTA OPCION SI O SI
         req.body.creationdate, 
         req.body.finishdate, 
-        req.body.statecode
+        req.body.statecode = 1 //TENGO QUE METER ESTA OPCION SI O SI 
         ];
        
         conexion.query(sql, params, function(err,result,fields){
