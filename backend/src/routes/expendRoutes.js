@@ -17,23 +17,25 @@ conexion.query('SELECT * FROM expend', function(err,result,fields){
 );
 
 router.post('/', (req, res)=>{
-                                                                                                                                                                  //¿EL NUMERO DE ID IRIA EN PARAMETROS? ejemplo {params.id}      
+console.log(req.body)
+        //¿EL NUMERO DE ID IRIA EN PARAMETROS? ejemplo {params.id}      
 let sql = `INSERT INTO expend (expen_descr, expen_value, expen_user_id, expen_creation_date, expen_finish_date, expend_state_code) 
             VALUES (?, ?, ?, ?, ?, ?)`
 
 let params = [
-        req.query.descr, 
-        req.query.value, 
-        req.query.userid, 
-        req.query.creationdate, 
-        req.query.finishdate, 
-        req.query.statecode
+        req.body.descr, 
+        req.body.value, 
+        req.body.userid, 
+        req.body.creationdate, 
+        req.body.finishdate, 
+        req.body.statecode
         ];
-
+       
         conexion.query(sql, params, function(err,result,fields){
               let respuesta;
 
               if (err){
+                console.log(err)
 
                 respuesta ={
                                 status: 'error',

@@ -4,6 +4,7 @@ const userRoutes = require('./routes/userRoutes')
 const saveRoutes = require('./routes/saveRoutes')
 const expendRoutes = require('./routes/expendRoutes')
 const cors = require('cors')
+const bodyParser = require ('body-parser');
 
 
 const app = express();
@@ -12,5 +13,9 @@ app.use('/mona', monaRoutes)
 app.use('/user', userRoutes)
 app.use('/save', saveRoutes)
 app.use('/expend', expendRoutes)
+
+app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.json())
+
 
 app.listen(3000, ()=>{console.log('Mona Loading...')} );
