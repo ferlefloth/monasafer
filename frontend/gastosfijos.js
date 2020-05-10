@@ -2,7 +2,6 @@ document.getElementById('btn-nuevo').addEventListener('click', mostrarModalNuevo
 document.getElementById('btn-guardar').addEventListener('click', guardarGastoEditado)
 
 
-
 function mostrarModalNuevoGasto(){
     cambiarTituloModal('Nuevo Gasto')
 
@@ -64,7 +63,8 @@ function cambiarTituloModal(titulo){
          descr : document.getElementById('descr').value,
          value : document.getElementById('value').value,
          creationdate : document.getElementById('creationdate').value,
-         finishdate: document.getElementById('finishdate').value
+         finishdate: document.getElementById('finishdate').value,
+         statecode: 1
          };
     
     let idGasto = document.getElementById('id-gasto').value; //hidden
@@ -74,29 +74,56 @@ function cambiarTituloModal(titulo){
     
     if (idGasto == -1){
 
-        metodo = 'POST';
+        expendInsert(url,data);
     }
     else{
-        metodo ='PUT';
-        url += '/' + idGasto
+        expendUpdate(url, idGasto,data);
      }
+};
+
+async function expendDelete (event){
     
+    let url = 'http://localhost:3000/expend'
+    let idGasto = event.currentTarget.getAttribute('data-id-gasto')
     
+    let data = {
+        statecode: 0,
+        };
+    console.log(data)
+    expendUpdate(url, idGasto, data)
+}
+
+function expendUpdate(url, idGasto, data){
+    console.log("url" + url)
+    console.log("idGasto" + idGasto)
+    console.log("data" + data)
     
-    
+    console.log(url, idGasto, data)
+    expendUpsert(url +'/'+ idGasto, 'PUT', data)
+};
+
+function expendInsert(url, data){
+    expendUpsert(url +'/', 'POST', data)
+};
+
+function expendUpsert(url, metodo, data){ //Parametrizamos una funcion y la llamo dos veces
+    console.log(data)
+    console.log(JSON.stringify(data))
     fetch(url, {
-                 method: metodo,
-                 body: JSON.stringify(data),
-                 credentials :"include", //CUANDO TENGAS EL LOGIN, ES PARA QUE VIAJEN LAS COOKIES
-                 headers:{
-                             "Content-Type": "application/json"
-                         }
-                })
-    
+        method: metodo,
+        body: JSON.stringify(data),
+        credentials :"include", //CUANDO TENGAS EL LOGIN, ES PARA QUE VIAJEN LAS COOKIES
+        headers:{
+                    "Content-Type": "application/json"
+                }
+       })
+
     .then (res => res.json())
     .then (data =>{alert(data.message)})        
     .catch((err)=>{alert('Error al guardar receta')})
-};
+}
+
+
 
 function login(){
     let url = "http://localhost:3000/auth"
@@ -163,7 +190,7 @@ function mostrarGastosEnTabla(expend){
                                             <td>${oneExpend.expen_creation_date}</td>
                                             <td>${oneExpend.expen_finish_date}</td> 
                                             <td>
-                                                <button class="btn btn-danger">Borrar</button>
+                                                <button data-id-gasto= ${oneExpend.expen_id} class="btn btn-danger btn-borrar">Borrar</button>
                                                 <button data-id-gasto= ${oneExpend.expen_id} class="btn btn-success btn-editar" data-toggle="modal" data-target="#modal-nuevo">Editar</button>
                                             </td>
                                         </tr>`
@@ -171,6 +198,9 @@ function mostrarGastosEnTabla(expend){
 
     document.querySelectorAll('.btn-editar').forEach(
         (botonEditar)=> {botonEditar.addEventListener('click', mostrarModalEditarGasto)}
+    )
+    document.querySelectorAll('.btn-borrar').forEach(
+        (botonBorrar)=> {botonBorrar.addEventListener('click', expendDelete)}
     )
 }
 cargarGastos();
