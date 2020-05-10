@@ -5,12 +5,12 @@ const router = express.Router();
 router.get('/', (req, res)=>{                          //GASTOS 
 
   
-conexion.query('SELECT * FROM expend', function(err,result,fields){
-        if (err) throw err;
-        
-        //console.log(result);
-        res.json(result);
-})       
+        conexion.query('SELECT * FROM expend WHERE expend_state_code = 1', function(err,result,fields){
+                if (err) throw err;
+                
+                //console.log(result);
+                res.json(result);
+        })       
                         
         //res.send('listado de gastos de monadb')
 });
@@ -84,7 +84,7 @@ router.put('/:id', (req, res)=>{
                 req.session.idUser,
                 req.body.creationdate, 
                 req.body.finishdate, 
-                req.body.statecode = 1, 
+                req.body.statecode , 
                 req.params.id
                 ];
         
