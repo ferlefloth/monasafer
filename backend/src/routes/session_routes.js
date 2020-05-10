@@ -5,6 +5,7 @@ router.post('/', (req, res)=>{
     console.log(req.session);
 
     req.session.user = 'Pablo';
+    req.session.idUser = 1;
 
     res.json({msg:'sesion iniciada'});
 })
