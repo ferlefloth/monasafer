@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/monasafer.css">
+    
     <link rel="stylesheet" href="vendor/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    
+    <title>Monasafer - Gastos fijos</title>
 
-
-    <title>MonaSafer</title>
 </head>
-
 
 
 <body>
@@ -22,13 +22,13 @@
 				 
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="navbar-toggler-icon"></span>
-				</button> <a class="navbar-brand" href="#">MonaSafer</a>
+				</button> <a class="navbar-brand" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/index.html">MonaSafer</a>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Gastos</a>
                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasafer/monasafer-front_end/frontend/gastosfijos.html">Gastos fijos</a> <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastosvariables.html">Gastos variables</a> <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastostotales.html">Gastos totales</a>
+                                <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastosfijos.html">Gastos fijos</a> <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastosvariables.html">Gastos variables</a> <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastostotales.html">Gastos totales</a>
                                <div class="dropdown-divider">
                                </div> <a class="dropdown-item" href="file:///C:/Users/Usuario/Desktop/monasaferAPP/gastoseditar.html">Editar Gastos</a>
                            </div>
@@ -53,12 +53,12 @@
 					<form class="form-inline">
 						<input class="form-control mr-sm-2" type="text" /> 
 						<button class="btn btn-primary my-2 my-sm-0" type="submit">
-							Buscar 
+							Buscar.
 						</button>
 					</form>
 					<ul class="navbar-nav ml-md-auto">
 						<li class="nav-item active">
-							 <a class="nav-link" href="#">Hola Mellousa! <span class="sr-only">(current)</span></a>
+							 <a class="nav-link" href="#">Hola Gori! <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item dropdown">
 							 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Cuenta</a>
@@ -76,68 +76,110 @@
     
 </div>
 
-<div class="container marketing"> <!------ Container de las TENGO - GASTOS - AHORRO -->
-    
 
-    <hr class="featurette-divider pb-md-5">
+<!------------------------------------- TABLA DE GASTOS FIJOS  -------------------------------------------------------------------------------->
+<div class="container-fluid">
 
-        <div class="row featurette py-md-5">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">Tengo</h2>
-            <h3 class="text-muted font-size-4"> Cuidá la posibilidad de ahorrar</h3>
-        
-            <p class="lead">.</p>
-        </div>
-        <div class="col-md-5">
-            <h2 class="featuring">$45.000 </h2>
-        </div>
-        </div>
+	<div class="row">
+		<div class="col">
+			<h1>Gastos</h1>
+		</div>
+	</div>
 
-        <hr class="featurette-divider pb-md-5">
+	<div class="row my-3"> 
+		<div class="col">
+			<button id="btn-nuevo"class="btn btn-primary" data-toggle="modal" data-target="#modal-nuevo">Nuevo gasto</button>
+		</div>
+	</div>
 
-        <div class="row featurette py-md-5">
-        <div class="col-md-7  ">
-            <h2 class="featurette-heading">Gastos</h2>
-            <h3 class="text-muted font-size-4"> Gastos Variables y Fijos de este mes</h3>
-            <p class="lead">.</p>
-        </div>
-        <div class="col-md-5 order-md-1">
-            <h2 class="featuring">$20.000 </h2>
-        </div>
-        </div>
-
-        <hr class="featurette-divider pb-md-5">
-
-        <div class="row featurette py-md-5">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">Ahorros</h2>
-            <h3 class="text-muted font-size-4"> Lográ tus objetivos</h3>
-            <p class="lead">.</p>
-        </div>
-        <div class="col-md-5">
-            <h2 class="featuring">$10.000 </h2>
-        </div>
-        </div>
-
-    <hr class="featurette-divider">
+	<div class="row">           
+		 <div class="col">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Descripción</th>
+						<th>Valor</th>
+						<th>Fecha de inicio</th>
+						<th>Fecha de Finalizacion</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody id="listado-gastos">
+			
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 </div>
 
-    
-    
+<!------------------------ MODAL EDITAR!!! --------------------->
+<div class="modal fade" id="modal-nuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  
+			<h5 class="modal-title" id="exampleModalLabel" >Editar Gastos fijos</h5>
+		  
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		
+		<div class="modal-body">
+		  
+			<form>
+
+				<input id="id-gasto"type="hidden">
+				<div class="form-group">
+				  <label for="descr">Descripción</label> 
+				  <input id="descr" name="descripcion" type="text" class="form-control"></input>;
+				</div>
+				<div class="form-group">
+				  <label for="value">Valor</label> 
+				  <input id="value" name="valor" type="text" class="form-control"></input>;
+				</div>
+				<div class="form-group">
+				  <label for="creationdate">Fecha de inicio</label> 
+				  <input id="creationdate" name="inicio" type="text" class="form-control"></input>;
+				</div>
+				<div class="form-group">
+				  <label for="finishdate">Fecha de finalización</label> 
+				  <input id="finishdate" name="finalizacion" type="text" class="form-control"></input>;
+				</div> 
+			  </form>
 
 
-<footer class="container mb-md-4">
+		</div>
+		
+		<div class="modal-footer">
+		  <button id="btn-guardar" type="button" class="btn btn-primary">Guardar</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+
+
+
+
+
+
+
+<!-- <footer class="container fixed-bottom mb-md-4">
     <p class="float-right"><a href="#">Back to top</a></p>
     <p style="color: black;">&copy; 2020 - Todos los derechos reservados a MonaSafer &middot;</p>
-</footer>
-
-
+</footer> -->
 
 
 <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="vendor/popper/popper.min.js"></script>
 <script src="vendor/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+<script src="gastosfijos.js"></script>
 </body>
+
+
+
 
 </html>
