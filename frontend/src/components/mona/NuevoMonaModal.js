@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import Swal from 'sweetalert2'
 
 function NuevoGastoModal(props){
 
@@ -42,7 +43,22 @@ function NuevoGastoModal(props){
             credentials: 'include'
         }).then(response => response.json())
         .then (data =>{
-            console.log(data);
+            if ( data.status === 'ok' ){
+                Swal.fire({
+                    text: data.message,
+                    icon: 'success'
+                })
+                
+
+            }
+            else{
+                Swal.fire({
+                    text: data.message,
+                    icon: 'error'
+                })
+              
+            }
+
         })
         .catch(err=>{
             console.log('Error')
@@ -76,11 +92,11 @@ function NuevoGastoModal(props){
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant= "secondary">
+                <Button variant= "secondary" onClick={props.hide}>
                     Cancelar
                 </Button>
 
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={handleSave} onClickCapture={props.hide}>
                     Guardar
                 </Button>
             </Modal.Footer>

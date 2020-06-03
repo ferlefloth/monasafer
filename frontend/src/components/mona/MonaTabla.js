@@ -117,29 +117,7 @@ function MonaTabla(props){
                 }
                 
                 
-                <tr>
-                    <td>Total</td>
-                    <td>Total Mona</td>
-                    <td>$45000</td>
-                </tr>
-                
-                
-                {
-                     monas.map( mona =>{
-                        return(
-                               [mona.mona_id,
-                               mona.mona_value]
 
-                            )
-                                    
-
-                        }
-                    ) 
-
-
-
-
-                }
                     
               
             </tbody>

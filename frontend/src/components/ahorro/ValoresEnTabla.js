@@ -65,7 +65,7 @@ function ValoresEnTabla (props){
             </td>
             
         </tr>
-       <EditAhorroModal />
+       
        
     </>
     
